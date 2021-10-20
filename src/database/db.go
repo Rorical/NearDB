@@ -115,7 +115,7 @@ func (db *NearDBDatabase) QueryPage(set []string, k, offset, all int) (utils.Ite
 	if val, exist := db.cache.Get(utils.PointInfo(point, all)); exist {
 		list := val.(utils.ItemList)
 		fmt.Printf("%v\n", list)
-		return list[offset:k], nil
+		return list[offset:offset + k], nil
 	}
 	db.indexlock.RLock()
 	unsortedresult := db.index.Query(point, all)
@@ -132,7 +132,7 @@ func (db *NearDBDatabase) QueryPage(set []string, k, offset, all int) (utils.Ite
 	}
 	sort.Sort(itemlist)
 	db.cache.Add(utils.PointInfo(point, all), itemlist)
-	return itemlist[offset:k], nil
+	return itemlist[offset:offset + k], nil
 }
 
 func (db *NearDBDatabase) Close() {
