@@ -109,8 +109,10 @@ func (db *NearDBDatabase) Query(set []string, k int) (utils.ItemList, error) {
 }
 
 func (db *NearDBDatabase) QueryPage(set []string, k, offset, all int) (utils.ItemList, error) {
+	log.Printf("Querying Set %v\n", set)
+	log.Printf("Limit: %d, Offset: %d, All: %d", k, offset, all)
 	point := utils.CompHash(set, db.datasize)
-	if val, exist := db.cache.Get(utils.PointInfo(point, k)); exist {
+	if val, exist := db.cache.Get(utils.PointInfo(point, all)); exist {
 		list := val.(utils.ItemList)
 		fmt.Printf("%v\n", list)
 		return list[offset:k], nil
@@ -129,7 +131,7 @@ func (db *NearDBDatabase) QueryPage(set []string, k, offset, all int) (utils.Ite
 		itemlist.Add(id, distance)
 	}
 	sort.Sort(itemlist)
-	db.cache.Add(utils.PointInfo(point, k), itemlist)
+	db.cache.Add(utils.PointInfo(point, all), itemlist)
 	return itemlist[offset:k], nil
 }
 
