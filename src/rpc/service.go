@@ -17,6 +17,10 @@ func (s *NearDBService) Add(ctx context.Context, in *pb.AddRequest) (*pb.NoneRes
 	return &pb.NoneResponse{}, s.DB.Add(in.Id, in.Taglist)
 }
 
+func (s *NearDBService) Remove(ctx context.Context, in *pb.AddRequest) (*pb.NoneResponse, error) {
+	return &pb.NoneResponse{}, s.DB.Remove(in.Id)
+}
+
 func (s *NearDBService) Query(ctx context.Context, in *pb.QueryRequest) (*pb.QueryResponse, error) {
 	items, err := s.DB.Query(in.Taglist, int(in.K))
 	resitems := make([]*pb.Item, len(items))
