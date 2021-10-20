@@ -110,7 +110,7 @@ func (db *NearDBDatabase) QueryPage(set []string, k, offset, all int) (utils.Ite
 	if val, exist := db.cache.Get(utils.PointInfo(point, k)); exist {
 		list := val.(utils.ItemList)
 		fmt.Printf("%v\n", list)
-		return list[k:offset], nil
+		return list[offset:k], nil
 	}
 	db.indexlock.RLock()
 	unsortedresult := db.index.Query(point, all)
