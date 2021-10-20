@@ -79,6 +79,53 @@ func (x *AddRequest) GetTaglist() []string {
 	return nil
 }
 
+type RemoveRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id string `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (x *RemoveRequest) Reset() {
+	*x = RemoveRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RemoveRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RemoveRequest) ProtoMessage() {}
+
+func (x *RemoveRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RemoveRequest.ProtoReflect.Descriptor instead.
+func (*RemoveRequest) Descriptor() ([]byte, []int) {
+	return file_pb_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *RemoveRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 type NoneResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -88,7 +135,7 @@ type NoneResponse struct {
 func (x *NoneResponse) Reset() {
 	*x = NoneResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pb_proto_msgTypes[1]
+		mi := &file_pb_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -101,7 +148,7 @@ func (x *NoneResponse) String() string {
 func (*NoneResponse) ProtoMessage() {}
 
 func (x *NoneResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pb_proto_msgTypes[1]
+	mi := &file_pb_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -114,7 +161,7 @@ func (x *NoneResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NoneResponse.ProtoReflect.Descriptor instead.
 func (*NoneResponse) Descriptor() ([]byte, []int) {
-	return file_pb_proto_rawDescGZIP(), []int{1}
+	return file_pb_proto_rawDescGZIP(), []int{2}
 }
 
 type QueryRequest struct {
@@ -129,7 +176,7 @@ type QueryRequest struct {
 func (x *QueryRequest) Reset() {
 	*x = QueryRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pb_proto_msgTypes[2]
+		mi := &file_pb_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -142,7 +189,7 @@ func (x *QueryRequest) String() string {
 func (*QueryRequest) ProtoMessage() {}
 
 func (x *QueryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pb_proto_msgTypes[2]
+	mi := &file_pb_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -155,7 +202,7 @@ func (x *QueryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryRequest.ProtoReflect.Descriptor instead.
 func (*QueryRequest) Descriptor() ([]byte, []int) {
-	return file_pb_proto_rawDescGZIP(), []int{2}
+	return file_pb_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *QueryRequest) GetTaglist() []string {
@@ -184,7 +231,7 @@ type Item struct {
 func (x *Item) Reset() {
 	*x = Item{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pb_proto_msgTypes[3]
+		mi := &file_pb_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -197,7 +244,7 @@ func (x *Item) String() string {
 func (*Item) ProtoMessage() {}
 
 func (x *Item) ProtoReflect() protoreflect.Message {
-	mi := &file_pb_proto_msgTypes[3]
+	mi := &file_pb_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -210,7 +257,7 @@ func (x *Item) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Item.ProtoReflect.Descriptor instead.
 func (*Item) Descriptor() ([]byte, []int) {
-	return file_pb_proto_rawDescGZIP(), []int{3}
+	return file_pb_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *Item) GetId() string {
@@ -238,7 +285,7 @@ type QueryResponse struct {
 func (x *QueryResponse) Reset() {
 	*x = QueryResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pb_proto_msgTypes[4]
+		mi := &file_pb_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -251,7 +298,7 @@ func (x *QueryResponse) String() string {
 func (*QueryResponse) ProtoMessage() {}
 
 func (x *QueryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pb_proto_msgTypes[4]
+	mi := &file_pb_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -264,7 +311,7 @@ func (x *QueryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryResponse.ProtoReflect.Descriptor instead.
 func (*QueryResponse) Descriptor() ([]byte, []int) {
-	return file_pb_proto_rawDescGZIP(), []int{4}
+	return file_pb_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *QueryResponse) GetItems() []*Item {
@@ -281,25 +328,31 @@ var file_pb_proto_rawDesc = []byte{
 	0x0a, 0x0a, 0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02,
 	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x18, 0x0a, 0x07,
 	0x74, 0x61, 0x67, 0x6c, 0x69, 0x73, 0x74, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x74,
-	0x61, 0x67, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x0e, 0x0a, 0x0c, 0x4e, 0x6f, 0x6e, 0x65, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x36, 0x0a, 0x0c, 0x51, 0x75, 0x65, 0x72, 0x79, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x74, 0x61, 0x67, 0x6c, 0x69, 0x73,
-	0x74, 0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x74, 0x61, 0x67, 0x6c, 0x69, 0x73, 0x74,
-	0x12, 0x0c, 0x0a, 0x01, 0x6b, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x01, 0x6b, 0x22, 0x32,
-	0x0a, 0x04, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x06, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x69, 0x73, 0x74, 0x61, 0x6e,
-	0x63, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x02, 0x52, 0x08, 0x64, 0x69, 0x73, 0x74, 0x61, 0x6e,
-	0x63, 0x65, 0x22, 0x2f, 0x0a, 0x0d, 0x51, 0x75, 0x65, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x1e, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x08, 0x20, 0x03,
-	0x28, 0x0b, 0x32, 0x08, 0x2e, 0x70, 0x62, 0x2e, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x05, 0x69, 0x74,
-	0x65, 0x6d, 0x73, 0x32, 0x6a, 0x0a, 0x0d, 0x4e, 0x65, 0x61, 0x72, 0x44, 0x42, 0x53, 0x65, 0x72,
-	0x76, 0x69, 0x63, 0x65, 0x12, 0x29, 0x0a, 0x03, 0x41, 0x64, 0x64, 0x12, 0x0e, 0x2e, 0x70, 0x62,
-	0x2e, 0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x10, 0x2e, 0x70, 0x62,
-	0x2e, 0x4e, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
-	0x2e, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x10, 0x2e, 0x70, 0x62, 0x2e, 0x51, 0x75,
-	0x65, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11, 0x2e, 0x70, 0x62, 0x2e,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
-	0x06, 0x5a, 0x04, 0x2e, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x61, 0x67, 0x6c, 0x69, 0x73, 0x74, 0x22, 0x1f, 0x0a, 0x0d, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x0e, 0x0a, 0x0c, 0x4e, 0x6f, 0x6e, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x36, 0x0a, 0x0c, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x74, 0x61, 0x67, 0x6c, 0x69,
+	0x73, 0x74, 0x18, 0x04, 0x20, 0x03, 0x28, 0x09, 0x52, 0x07, 0x74, 0x61, 0x67, 0x6c, 0x69, 0x73,
+	0x74, 0x12, 0x0c, 0x0a, 0x01, 0x6b, 0x18, 0x05, 0x20, 0x01, 0x28, 0x03, 0x52, 0x01, 0x6b, 0x22,
+	0x32, 0x0a, 0x04, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x06, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x69, 0x73, 0x74, 0x61,
+	0x6e, 0x63, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x02, 0x52, 0x08, 0x64, 0x69, 0x73, 0x74, 0x61,
+	0x6e, 0x63, 0x65, 0x22, 0x2f, 0x0a, 0x0d, 0x51, 0x75, 0x65, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1e, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x08, 0x20,
+	0x03, 0x28, 0x0b, 0x32, 0x08, 0x2e, 0x70, 0x62, 0x2e, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x05, 0x69,
+	0x74, 0x65, 0x6d, 0x73, 0x32, 0x9b, 0x01, 0x0a, 0x0d, 0x4e, 0x65, 0x61, 0x72, 0x44, 0x42, 0x53,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x29, 0x0a, 0x03, 0x41, 0x64, 0x64, 0x12, 0x0e, 0x2e,
+	0x70, 0x62, 0x2e, 0x41, 0x64, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x10, 0x2e,
+	0x70, 0x62, 0x2e, 0x4e, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x2e, 0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x10, 0x2e, 0x70, 0x62, 0x2e,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x11, 0x2e, 0x70,
+	0x62, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x2f, 0x0a, 0x06, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x12, 0x11, 0x2e, 0x70, 0x62,
+	0x2e, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x10,
+	0x2e, 0x70, 0x62, 0x2e, 0x4e, 0x6f, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x42, 0x06, 0x5a, 0x04, 0x2e, 0x3b, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -314,22 +367,25 @@ func file_pb_proto_rawDescGZIP() []byte {
 	return file_pb_proto_rawDescData
 }
 
-var file_pb_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_pb_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_pb_proto_goTypes = []interface{}{
 	(*AddRequest)(nil),    // 0: pb.AddRequest
-	(*NoneResponse)(nil),  // 1: pb.NoneResponse
-	(*QueryRequest)(nil),  // 2: pb.QueryRequest
-	(*Item)(nil),          // 3: pb.Item
-	(*QueryResponse)(nil), // 4: pb.QueryResponse
+	(*RemoveRequest)(nil), // 1: pb.RemoveRequest
+	(*NoneResponse)(nil),  // 2: pb.NoneResponse
+	(*QueryRequest)(nil),  // 3: pb.QueryRequest
+	(*Item)(nil),          // 4: pb.Item
+	(*QueryResponse)(nil), // 5: pb.QueryResponse
 }
 var file_pb_proto_depIdxs = []int32{
-	3, // 0: pb.QueryResponse.items:type_name -> pb.Item
+	4, // 0: pb.QueryResponse.items:type_name -> pb.Item
 	0, // 1: pb.NearDBService.Add:input_type -> pb.AddRequest
-	2, // 2: pb.NearDBService.Query:input_type -> pb.QueryRequest
-	1, // 3: pb.NearDBService.Add:output_type -> pb.NoneResponse
-	4, // 4: pb.NearDBService.Query:output_type -> pb.QueryResponse
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
+	3, // 2: pb.NearDBService.Query:input_type -> pb.QueryRequest
+	1, // 3: pb.NearDBService.Remove:input_type -> pb.RemoveRequest
+	2, // 4: pb.NearDBService.Add:output_type -> pb.NoneResponse
+	5, // 5: pb.NearDBService.Query:output_type -> pb.QueryResponse
+	2, // 6: pb.NearDBService.Remove:output_type -> pb.NoneResponse
+	4, // [4:7] is the sub-list for method output_type
+	1, // [1:4] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -354,7 +410,7 @@ func file_pb_proto_init() {
 			}
 		}
 		file_pb_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*NoneResponse); i {
+			switch v := v.(*RemoveRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -366,7 +422,7 @@ func file_pb_proto_init() {
 			}
 		}
 		file_pb_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryRequest); i {
+			switch v := v.(*NoneResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -378,7 +434,7 @@ func file_pb_proto_init() {
 			}
 		}
 		file_pb_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Item); i {
+			switch v := v.(*QueryRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -390,6 +446,18 @@ func file_pb_proto_init() {
 			}
 		}
 		file_pb_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Item); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryResponse); i {
 			case 0:
 				return &v.state
@@ -408,7 +476,7 @@ func file_pb_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_pb_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -436,6 +504,7 @@ const _ = grpc.SupportPackageIsVersion6
 type NearDBServiceClient interface {
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*NoneResponse, error)
 	Query(ctx context.Context, in *QueryRequest, opts ...grpc.CallOption) (*QueryResponse, error)
+	Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*NoneResponse, error)
 }
 
 type nearDBServiceClient struct {
@@ -464,10 +533,20 @@ func (c *nearDBServiceClient) Query(ctx context.Context, in *QueryRequest, opts 
 	return out, nil
 }
 
+func (c *nearDBServiceClient) Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*NoneResponse, error) {
+	out := new(NoneResponse)
+	err := c.cc.Invoke(ctx, "/pb.NearDBService/Remove", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NearDBServiceServer is the server API for NearDBService service.
 type NearDBServiceServer interface {
 	Add(context.Context, *AddRequest) (*NoneResponse, error)
 	Query(context.Context, *QueryRequest) (*QueryResponse, error)
+	Remove(context.Context, *RemoveRequest) (*NoneResponse, error)
 }
 
 // UnimplementedNearDBServiceServer can be embedded to have forward compatible implementations.
@@ -479,6 +558,9 @@ func (*UnimplementedNearDBServiceServer) Add(context.Context, *AddRequest) (*Non
 }
 func (*UnimplementedNearDBServiceServer) Query(context.Context, *QueryRequest) (*QueryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Query not implemented")
+}
+func (*UnimplementedNearDBServiceServer) Remove(context.Context, *RemoveRequest) (*NoneResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Remove not implemented")
 }
 
 func RegisterNearDBServiceServer(s *grpc.Server, srv NearDBServiceServer) {
@@ -521,6 +603,24 @@ func _NearDBService_Query_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NearDBService_Remove_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NearDBServiceServer).Remove(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.NearDBService/Remove",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NearDBServiceServer).Remove(ctx, req.(*RemoveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _NearDBService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.NearDBService",
 	HandlerType: (*NearDBServiceServer)(nil),
@@ -532,6 +632,10 @@ var _NearDBService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Query",
 			Handler:    _NearDBService_Query_Handler,
+		},
+		{
+			MethodName: "Remove",
+			Handler:    _NearDBService_Remove_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
