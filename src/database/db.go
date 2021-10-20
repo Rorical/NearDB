@@ -6,6 +6,7 @@ import (
 	"github.com/hashicorp/golang-lru"
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/opt"
+	"log"
 	"sort"
 	"strings"
 	"sync"
@@ -23,6 +24,7 @@ type NearDBDatabase struct {
 
 func NewDatabase() (*NearDBDatabase, error) {
 	size := 20
+	log.Println("Loading DB")
 	db, err := leveldb.OpenFile("db", nil)
 	if err != nil {
 		return nil, err
@@ -31,6 +33,7 @@ func NewDatabase() (*NearDBDatabase, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Println("DB Loaded")
 	return &NearDBDatabase{
 		index:    utils.NewLshForest(size, 6, 3, 3),
 		datasize: size,

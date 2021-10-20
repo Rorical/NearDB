@@ -54,7 +54,6 @@ func NewService() (*NearDBService, error) {
 	if err != nil {
 		return nil, err
 	}
-	db.Refresh()
 	return &NearDBService{
 		DB: db,
 	}, nil

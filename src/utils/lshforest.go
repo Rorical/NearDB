@@ -5,6 +5,7 @@ import (
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 	"github.com/syndtr/goleveldb/leveldb/util"
+	"log"
 	"math"
 	"math/rand"
 	"strings"
@@ -119,6 +120,7 @@ func NewLshForest(dim, l, m int, w float64) *LshForest {
 	tables := make([]*leveldb.DB, l)
 	var err error
 	for i := range tables {
+		log.Printf("Loading Table %d\n", i)
 		tables[i], err = leveldb.OpenFile(fmt.Sprintf("table_%d", i), nil)
 		if err != nil {
 			panic(err)
