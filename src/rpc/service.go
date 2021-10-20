@@ -14,15 +14,29 @@ type NearDBService struct {
 }
 
 func (s *NearDBService) Add(ctx context.Context, in *pb.AddRequest) (*pb.NoneResponse, error) {
-	return &pb.NoneResponse{}, s.DB.Add(in.Id, in.Taglist)
+	return &pb.NoneResponse{}, s.DB.Add(in.GetId(), in.GetTaglist())
 }
 
-func (s *NearDBService) Remove(ctx context.Context, in *pb.AddRequest) (*pb.NoneResponse, error) {
-	return &pb.NoneResponse{}, s.DB.Remove(in.Id)
+func (s *NearDBService) Remove(ctx context.Context, in *pb.RemoveRequest) (*pb.NoneResponse, error) {
+	return &pb.NoneResponse{}, s.DB.Remove(in.GetId())
 }
 
 func (s *NearDBService) Query(ctx context.Context, in *pb.QueryRequest) (*pb.QueryResponse, error) {
-	items, err := s.DB.Query(in.Taglist, int(in.K))
+	items, err := s.DB.Query(in.GetTaglist(), int(in.GetK()))
+	resitems := make([]*pb.Item, len(items))
+	for i, item := range items {
+		resitems[i] = &pb.Item{
+			Id:       item.Id,
+			Distance: item.Distance,
+		}
+	}
+	return &pb.QueryResponse{
+		Items: resitems,
+	}, err
+}
+
+func (s *NearDBService) QueryPage(ctx context.Context, in *pb.QueryPageRequest) (*pb.QueryResponse, error) {
+	items, err := s.DB.QueryPage(in.GetTaglist(), int(in.GetK()), int(in.GetOffset()), int(in.GetAll()))
 	resitems := make([]*pb.Item, len(items))
 	for i, item := range items {
 		resitems[i] = &pb.Item{

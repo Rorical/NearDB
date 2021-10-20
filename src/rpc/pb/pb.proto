@@ -5,6 +5,7 @@ package pb;
 service NearDBService {
   rpc Add (AddRequest) returns (NoneResponse) {}
   rpc Query (QueryRequest) returns (QueryResponse) {}
+  rpc QueryPage (QueryPageRequest) returns (QueryResponse) {}
   rpc Remove (RemoveRequest) returns (NoneResponse) {}
 }
 
@@ -25,11 +26,18 @@ message QueryRequest {
   int64 k = 5;
 }
 
+message QueryPageRequest {
+  repeated string taglist = 4;
+  int64 k = 5;
+  int64 offset = 6;
+  int64 all = 7;
+}
+
 message Item {
-  string id = 6;
-  float distance = 7;
+  string id = 8;
+  float distance = 9;
 }
 
 message QueryResponse {
-  repeated Item items = 8;
+  repeated Item items = 10;
 }

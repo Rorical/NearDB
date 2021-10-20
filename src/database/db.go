@@ -1,22 +1,25 @@
 package database
 
 import (
+	"fmt"
+	"github.com/Rorical/NearDB/src/utils"
+	"github.com/hashicorp/golang-lru"
+	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 	"sort"
 	"strings"
 	"sync"
-
-	"github.com/Rorical/NearDB/src/utils"
-	"github.com/syndtr/goleveldb/leveldb"
 )
 
 type NearDBDatabase struct {
-	index    *utils.LshForest
-	database *leveldb.DB
-	dblock     *sync.RWMutex
-	indexlock     *sync.RWMutex
-	datasize int
+	index     *utils.LshForest
+	database  *leveldb.DB
+	dblock    *sync.RWMutex
+	indexlock *sync.RWMutex
+	cache     *lru.Cache
+	datasize  int
 }
+
 
 func NewDatabase() (*NearDBDatabase, error) {
 	size := 20
@@ -24,10 +27,17 @@ func NewDatabase() (*NearDBDatabase, error) {
 	if err != nil {
 		return nil, err
 	}
+	cache, err := lru.New(100)
+	if err != nil {
+		return nil, err
+	}
 	return &NearDBDatabase{
 		index:    utils.NewLshForest(size, 6, 3, 3),
 		datasize: size,
 		database: db,
+		cache: cache,
+		dblock: &sync.RWMutex{},
+		indexlock: &sync.RWMutex{},
 	}, nil
 }
 
@@ -74,6 +84,9 @@ func (db *NearDBDatabase) Refresh() {
 
 func (db *NearDBDatabase) Query(set []string, k int) (utils.ItemList, error) {
 	point := utils.CompHash(set, db.datasize)
+	if val, exist := db.cache.Get(utils.PointInfo(point, k)); exist {
+		return val.(utils.ItemList), nil
+	}
 	db.indexlock.RLock()
 	unsortedresult := db.index.Query(point, k)
 	db.indexlock.RUnlock()
@@ -88,9 +101,36 @@ func (db *NearDBDatabase) Query(set []string, k int) (utils.ItemList, error) {
 		itemlist.Add(id, distance)
 	}
 	sort.Sort(itemlist)
+	db.cache.Add(utils.PointInfo(point, k), itemlist)
 	return itemlist, nil
+}
+
+func (db *NearDBDatabase) QueryPage(set []string, k, offset, all int) (utils.ItemList, error) {
+	point := utils.CompHash(set, db.datasize)
+	if val, exist := db.cache.Get(utils.PointInfo(point, k)); exist {
+		list := val.(utils.ItemList)
+		fmt.Printf("%v\n", list)
+		return list[k:offset], nil
+	}
+	db.indexlock.RLock()
+	unsortedresult := db.index.Query(point, all)
+	db.indexlock.RUnlock()
+	originalset := utils.GenSet(set)
+	itemlist := utils.NewItemList(len(unsortedresult))
+	for _, id := range unsortedresult {
+		db.dblock.RLock()
+		data, _ := db.database.Get(utils.StringIn(id), nil)
+		db.dblock.RUnlock()
+		compset := utils.GenSet(strings.Split(utils.StringOut(data), ","))
+		distance := utils.CalcDist(originalset, compset)
+		itemlist.Add(id, distance)
+	}
+	sort.Sort(itemlist)
+	db.cache.Add(utils.PointInfo(point, k), itemlist)
+	return itemlist[offset:k], nil
 }
 
 func (db *NearDBDatabase) Close() {
 	db.database.Close()
+	db.index.Close()
 }

@@ -230,7 +230,7 @@ func lookup(table *leveldb.DB, maxLevel int, tableKey hashTableKey, done <-chan 
 			temp := make([]byte, len(item))
 			copy(temp, item)
 			select {
-			case out <- string(temp):
+			case out <- StringOut(temp):
 			case <-done:
 				return
 			}
@@ -316,4 +316,16 @@ L:	for {
 		ids = append(ids, id)
 	}
 	return ids
+}
+
+
+func (index *LshForest) Close() error {
+	var err error
+	for _, d := range index.tables {
+		err = d.Close()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

@@ -32,6 +32,15 @@ func IntsToBytes(n []int) []byte {
 	return bytebuf.Bytes()
 }
 
+func FloatsToBytes(n []float64) []byte {
+	bytebuf := bytes.NewBuffer([]byte{})
+	for _, v := range n {
+		data := int64(v)
+		binary.Write(bytebuf, binary.BigEndian, data)
+	}
+	return bytebuf.Bytes()
+}
+
 func BytesToInts(bys []byte) []int {
 	bytebuff := bytes.NewBuffer(bys)
 	var data []int
@@ -41,4 +50,10 @@ func BytesToInts(bys []byte) []int {
 		data = append(data, int(buff))
 	}
 	return data
+}
+
+func PointInfo(point Point, k int) string {
+	newpt := append(point, 0)
+	newpt = append(newpt, float64(k))
+	return StringOut(FloatsToBytes(newpt))
 }
