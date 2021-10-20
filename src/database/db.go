@@ -3,6 +3,7 @@ package database
 import (
 	"sort"
 	"strings"
+	"sync"
 
 	"github.com/Rorical/NearDB/src/utils"
 	"github.com/syndtr/goleveldb/leveldb"
@@ -11,6 +12,8 @@ import (
 type NearDBDatabase struct {
 	index    *utils.LshForest
 	database *leveldb.DB
+	dblock     *sync.RWMutex
+	indexlock     *sync.RWMutex
 	datasize int
 }
 
@@ -28,16 +31,22 @@ func NewDatabase() (*NearDBDatabase, error) {
 }
 
 func (db *NearDBDatabase) Add(id string, set []string) error {
+	db.dblock.Lock()
 	err := db.database.Put(utils.StringIn(id), utils.StringIn(strings.Join(set, ",")), nil)
+	db.dblock.Unlock()
 	if err != nil {
 		return err
 	}
 	point := utils.CompHash(set, db.datasize)
+	db.indexlock.Lock()
 	db.index.Insert(point, id)
+	db.indexlock.Unlock()
 	return nil
 }
 
 func (db *NearDBDatabase) Refresh() {
+	db.dblock.RLock()
+	defer db.dblock.RUnlock()
 	iter := db.database.NewIterator(nil, nil)
 	for iter.Next() {
 		id := utils.StringOut(iter.Key())
@@ -49,11 +58,15 @@ func (db *NearDBDatabase) Refresh() {
 
 func (db *NearDBDatabase) Query(set []string, k int) (utils.ItemList, error) {
 	point := utils.CompHash(set, db.datasize)
+	db.indexlock.RLock()
 	unsortedresult := db.index.Query(point, k)
+	db.indexlock.RUnlock()
 	originalset := utils.GenSet(set)
 	itemlist := utils.NewItemList(len(unsortedresult))
 	for _, id := range unsortedresult {
+		db.dblock.RLock()
 		data, _ := db.database.Get(utils.StringIn(id), nil)
+		db.dblock.RUnlock()
 		compset := utils.GenSet(strings.Split(utils.StringOut(data), ","))
 		distance := utils.CalcDist(originalset, compset)
 		itemlist.Add(id, distance)
