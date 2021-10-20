@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/syndtr/goleveldb/leveldb/opt"
 	"sort"
 	"strings"
 	"sync"
@@ -32,7 +33,7 @@ func NewDatabase() (*NearDBDatabase, error) {
 
 func (db *NearDBDatabase) Add(id string, set []string) error {
 	db.dblock.Lock()
-	err := db.database.Put(utils.StringIn(id), utils.StringIn(strings.Join(set, ",")), nil)
+	err := db.database.Put(utils.StringIn(id), utils.StringIn(strings.Join(set, ",")), &opt.WriteOptions{Sync: true})
 	db.dblock.Unlock()
 	if err != nil {
 		return err
@@ -40,6 +41,21 @@ func (db *NearDBDatabase) Add(id string, set []string) error {
 	point := utils.CompHash(set, db.datasize)
 	db.indexlock.Lock()
 	db.index.Insert(point, id)
+	db.indexlock.Unlock()
+	return nil
+}
+
+func (db *NearDBDatabase) Remove(id string) error {
+	db.dblock.RLock()
+	data, err := db.database.Get(utils.StringIn(id), nil)
+	db.dblock.RUnlock()
+	if err != nil {
+		return err
+	}
+	set := strings.Split(utils.StringOut(data), ",")
+	point := utils.CompHash(set, db.datasize)
+	db.indexlock.Lock()
+	db.index.Delete(point, id)
 	db.indexlock.Unlock()
 	return nil
 }

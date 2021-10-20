@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"github.com/syndtr/goleveldb/leveldb"
+	"github.com/syndtr/goleveldb/leveldb/opt"
 	"github.com/syndtr/goleveldb/leveldb/util"
 	"math"
 	"math/rand"
@@ -147,8 +148,31 @@ func ListAdd(db *leveldb.DB, key []byte, item string) error {
 	if !ListExist(items, item) {
 		items = append(items, item)
 	}
-	return db.Put(key, StringIn(strings.Join(items, ",")), nil)
+	return db.Put(key, StringIn(strings.Join(items, ",")), &opt.WriteOptions{Sync: true})
 }
+
+func DeleteSlice(list []string, ele string) []string{
+	i := 0
+	for i = range list {
+		if list[i] == ele {
+			break
+		}
+	}
+	return list[:i+copy(list[i:], list[i+1:])]
+}
+
+func ListDelete(db *leveldb.DB, key []byte, item string) error {
+	val, err := db.Get(key, nil)
+	if err != nil {
+		return err
+	}
+	items := strings.Split(StringOut(val), ",")
+	if ListExist(items, item) {
+		items = DeleteSlice(items, item)
+	}
+	return db.Put(key, StringIn(strings.Join(items, ",")), &opt.WriteOptions{Sync: true})
+}
+
 
 // Insert adds a new data point to the LSH Forest.
 // id is the unique identifier for the data point.
@@ -168,7 +192,27 @@ func (index *LshForest) Insert(point Point, id string) {
 					panic(e)
 				}
 			} else {
-				if e := table.Put(key, StringIn(id), nil); e != nil {
+				if e := table.Put(key, StringIn(id), &opt.WriteOptions{Sync: true}); e != nil {
+					panic(e)
+				}
+			}
+			wg.Done()
+		}(table, hv)
+	}
+	wg.Wait()
+}
+
+func (index *LshForest) Delete(point Point, id string) {
+	hvs := index.hash(point)
+	var wg sync.WaitGroup
+	wg.Add(len(index.tables))
+	for i := range index.tables {
+		hv := hvs[i]
+		table := index.tables[i]
+		go func(table *leveldb.DB, hv hashTableKey) {
+			key := IntsToBytes(hv)
+			if i, e := table.Has(key, nil); i && e == nil {
+				if e := ListDelete(table, key, id); e != nil {
 					panic(e)
 				}
 			}
