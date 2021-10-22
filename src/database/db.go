@@ -1,6 +1,7 @@
 package database
 
 import (
+	"errors"
 	"fmt"
 	"github.com/Rorical/NearDB/src/utils"
 	"github.com/hashicorp/golang-lru"
@@ -115,7 +116,10 @@ func (db *NearDBDatabase) QueryPage(set []string, k, offset, all int) (utils.Ite
 	if val, exist := db.cache.Get(utils.PointInfo(point, all)); exist {
 		list := val.(utils.ItemList)
 		fmt.Printf("%v\n", list)
-		return list[offset:offset + k], nil
+		if offset + k < len(list) {
+			return list[offset:offset + k], nil
+		}
+		return nil, errors.New("Offset Exceed All")
 	}
 	db.indexlock.RLock()
 	unsortedresult := db.index.Query(point, all)
